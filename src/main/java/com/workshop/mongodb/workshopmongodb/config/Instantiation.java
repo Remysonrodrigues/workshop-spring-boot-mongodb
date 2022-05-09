@@ -2,6 +2,7 @@ package com.workshop.mongodb.workshopmongodb.config;
 
 import com.workshop.mongodb.workshopmongodb.domain.Post;
 import com.workshop.mongodb.workshopmongodb.domain.User;
+import com.workshop.mongodb.workshopmongodb.dto.AuthorDTO;
 import com.workshop.mongodb.workshopmongodb.repository.PostRepository;
 import com.workshop.mongodb.workshopmongodb.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,12 +35,14 @@ public class Instantiation implements CommandLineRunner {
         User alex = new User(null, "Alex Green", "alex@gmail.com");
         User bob = new User(null, "Bob Grey", "bob@gmail.com");
 
+        userRepository.saveAll(Arrays.asList(maria, alex, bob));
+
         Post post1 = new Post(
             null,
             sdf.parse("21/03/2018"),
             "partiu viagem",
             "Vou viajar para São Paulo. Abraços!",
-            maria
+            new AuthorDTO(maria)
         );
 
         Post post2 = new Post(
@@ -47,10 +50,9 @@ public class Instantiation implements CommandLineRunner {
             sdf.parse("21/03/2018"),
             "Bom dia",
             "Acordei feliz hoje!",
-            maria
+            new AuthorDTO(maria)
         );
 
-        userRepository.saveAll(Arrays.asList(maria, alex, bob));
         postRepository.saveAll(Arrays.asList(post1, post2));
 
     }
